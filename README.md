@@ -14,6 +14,26 @@ Informações relevantes:
 
 - Caso algo seja atualizado no template, vocês serão notificados.
 
+
+
+## Implementação de `RolaDado()`
+A funçao que executa a rolagem do dado tem que ser realizada da seguinte forma:
+
+```
+#include "dado.h"
+
+#define FACES_DADO 4
+
+// Gerador congruente linear com semente fixa: a sequência é sempre a mesma
+static unsigned int semente = 2026;
+
+int RolaDado() {
+    semente = semente * 1103515245u + 12345u;
+    return (int)((semente / 65536u) % FACES_DADO) + 1;
+}
+```
+Isso garante que todos tenham a mesma sequência de jogas. Crie um TAD `dado.c` e `dado.h` e coloque a função nele.
+
 Qualquer dúvida ou problema, entre em contato com os monitores e/ou professores.
 
 
