@@ -4,7 +4,6 @@
 
 ### DEPARTAMENTO DE INFORMÁTICA
 
-<br>
 
 ## TRABALHO PRÁTICO
 
