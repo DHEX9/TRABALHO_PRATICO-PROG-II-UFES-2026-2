@@ -21,7 +21,8 @@ Jogador *criaJogador(char *nome, char *cor, int forca){
 
     //Aloca dinamicamente um jogador.
     Jogador *j = calloc(1, sizeof(Jogador));
-    
+    if(!j) exit(1);
+     
     strcpy(j->nome, nome);
     strcpy(j->cor, cor);
     j->forca = forca;
@@ -43,7 +44,7 @@ Jogador *leJogador(){
     //Leitura nome, cor e força.
     scanf(" %50[^\n]\n", nome);
     scanf(" %15[^\n]\n", cor);
-    scanf("%d", forca);
+    scanf("%d", &forca);
 
     //retorna o jogador criado.
     return criaJogador(nome, cor, forca);
@@ -105,7 +106,22 @@ int comparaNomeJogador(void *dado, void *nome){
  * @return Valor negativo se d1 deve vir antes de d2, positivo se deve vir depois e 0 se forem equivalentes
  */
 int comparaOrdJogador(const void *d1, const void *d2){
-    
+
+    //Type cast.
+    Jogador * const * j1 = (Jogador * const *)d1;
+    Jogador * const * j2 = (Jogador * const *)d2;
+
+    //Comparações.
+    if((*j1)->casa> (*j2)->casa) return -1;
+    if((*j2)->casa > (*j1)->casa) return 1;
+
+    if((*j1)->forca > (*j2)->forca) return 1;
+    if((*j2)->forca > (*j1)->forca) return -1;
+
+    if((*j1)->xp > (*j2)->xp) return 1;
+    if((*j2)->xp > (*j1)->xp) return -1;
+
+    return strcmp((*j1)->nome, (*j2)->nome);;
 }
 
 /**
@@ -116,63 +132,92 @@ int comparaOrdJogador(const void *d1, const void *d2){
  * @param ocupante Jogador que já estava na célula
  * @return 1 se o desafiante vencer, 0 se o ocupante vencer
  */
-int venceDisputaJogador(Jogador *desafiante, Jogador *ocupante);
+int venceDisputaJogador(Jogador *desafiante, Jogador *ocupante){
+
+    //Type cast void para jogador.
+    Jogador *d = (Jogador*) desafiante;
+    Jogador *o = (Jogador*) ocupante;
+
+    //Verifica quem vence a disputa.
+    if(d->forca > o->forca) return 1;
+    if(o->forca > d->forca) return 0;
+
+    if(d->xp > o->xp)return 1;
+    
+    return 0;
+}
 
 /**
  * @brief Retorna o nome do jogador
  * @param j Jogador
  * @return Ponteiro para a string com o nome do jogador
  */
-char *obtemNomeJogador(Jogador *j);
+char *obtemNomeJogador(Jogador *j){
+    return j->nome;
+}
 
 /**
  * @brief Retorna a casa do mapa em que o jogador está (0 = Início, N + 1 = Fim)
  * @param j Jogador
  * @return Posição atual do jogador
  */
-int obtemPosicaoJogador(Jogador *j);
+int obtemPosicaoJogador(Jogador *j){
+    return j->casa;
+}
 
 /**
  * @brief Retorna a força atual do jogador
  * @param j Jogador
  * @return Força do jogador
  */
-int obtemForcaJogador(Jogador *j);
+int obtemForcaJogador(Jogador *j){
+    return j->forca;
+}
 
 /**
  * @brief Retorna a XP atual do jogador
  * @param j Jogador
  * @return XP do jogador
  */
-int obtemXPJogador(Jogador *j);
+int obtemXPJogador(Jogador *j){
+    return j->xp;
+}
 
 /**
  * @brief Retorna a quantidade de ouro atual do jogador
  * @param j Jogador
  * @return Ouro do jogador
  */
-int obtemOuroJogador(Jogador *j);
+int obtemOuroJogador(Jogador *j){
+    return j->ouro;
+}
 
 /**
  * @brief Retorna quantas jogadas o jogador já realizou
  * @param j Jogador
  * @return Quantidade de jogadas do jogador
  */
-int obtemJogadasJogador(Jogador *j);
+int obtemJogadasJogador(Jogador *j){
+    return j->jogadas;
+}
 
 /**
  * @brief Retorna quantas disputas territoriais o jogador já venceu (como desafiante ou como ocupante)
  * @param j Jogador
  * @return Quantidade de disputas vencidas
  */
-int obtemDisputasVencidasJogador(Jogador *j);
+int obtemDisputasVencidasJogador(Jogador *j){
+    return j->disputasVencidas;
+}
 
 /**
  * @brief Retorna quantos monstros o jogador já derrotou
  * @param j Jogador
  * @return Quantidade de monstros derrotados
  */
-int obtemMonstrosDerrotadosJogador(Jogador *j);
+int obtemMonstrosDerrotadosJogador(Jogador *j){
+    return j->monstrosDerrotados;
+}
 
 /**
  * @brief Altera a posição do jogador para a casa informada. Apenas atualiza o campo do jogador:
@@ -180,53 +225,73 @@ int obtemMonstrosDerrotadosJogador(Jogador *j);
  * @param j Jogador
  * @param posicao Nova posição do jogador
  */
-void definePosicaoJogador(Jogador *j, int posicao);
+void definePosicaoJogador(Jogador *j, int posicao){
+    j->casa = posicao;
+}
 
 /**
  * @brief Soma o valor informado à força do jogador
  * @param j Jogador
  * @param forca Valor a ser somado à força
  */
-void adicionaForcaJogador(Jogador *j, int forca);
+void adicionaForcaJogador(Jogador *j, int forca){
+    j->forca += forca;
+}
 
 /**
  * @brief Soma o valor informado à XP do jogador
  * @param j Jogador
  * @param xp Valor a ser somado à XP
  */
-void adicionaXPJogador(Jogador *j, int xp);
+void adicionaXPJogador(Jogador *j, int xp){
+    j->xp += xp;
+}
 
 /**
  * @brief Soma o valor informado ao ouro do jogador (um valor negativo desconta ouro, ex: compra de item)
  * @param j Jogador
  * @param ouro Valor a ser somado ao ouro
  */
-void adicionaOuroJogador(Jogador *j, int ouro);
+void adicionaOuroJogador(Jogador *j, int ouro){
+    j->ouro += ouro;
+}
 
 /**
  * @brief Soma 1 à quantidade de jogadas do jogador
  * @param j Jogador
  */
-void incrementaJogadasJogador(Jogador *j);
+void incrementaJogadasJogador(Jogador *j){
+    j->jogadas++;
+}
 
 /**
  * @brief Soma 1 à quantidade de disputas vencidas pelo jogador
  * @param j Jogador
  */
-void incrementaDisputasVencidasJogador(Jogador *j);
+void incrementaDisputasVencidasJogador(Jogador *j){
+    j->disputasVencidas++;
+}
 
 /**
  * @brief Soma 1 à quantidade de monstros derrotados pelo jogador
  * @param j Jogador
  */
-void incrementaMonstrosDerrotadosJogador(Jogador *j);
+void incrementaMonstrosDerrotadosJogador(Jogador *j){
+    j->monstrosDerrotados++;
+}
 
 /**
  * @brief Converte o dado genérico para jogador e imprime uma linha no formato do ESTADO:
  * "- <nome>: casa <posicao> | forca <forca> | xp <xp> | ouro <ouro>" seguido de quebra de linha.
  * @param dado Ponteiro genérico para o jogador
  */
-void printEstadoJogador(void *dado);
+void printEstadoJogador(void *dado){
+
+    //Type cast.
+    Jogador *j = (Jogador*)dado;
+    
+    printf("- %s: casa %d | forca %d | xp %d | ouro ouro\n", j->nome, j->casa, j->forca, j->xp, j->ouro);
+}
 
 /**
  * @brief Imprime uma linha no formato do RANKING:
@@ -234,7 +299,9 @@ void printEstadoJogador(void *dado);
  * @param j Jogador
  * @param colocacao Colocação do jogador no ranking (começando em 1)
  */
-void printRankingJogador(Jogador *j, int colocacao);
+void printRankingJogador(Jogador *j, int colocacao){
+    printf("%d. %s (%s) | casa %d | forca %d | xp %d\n", colocacao, j->nome, j->cor,j->casa, j->forca, j->xp);
+}
 
 /**
  * @brief Converte o dado genérico para jogador e imprime uma linha no formato do RELATORIO:
@@ -242,10 +309,23 @@ void printRankingJogador(Jogador *j, int colocacao);
  * seguido de quebra de linha.
  * @param dado Ponteiro genérico para o jogador
  */
-void printRelatorioJogador(void *dado);
+void printRelatorioJogador(void *dado){
+
+    //Type cast.
+    Jogador *j = (Jogador*)dado;
+
+    //Printa.
+    printf("- %s: | jogadas %d | disputas vencidas %d | forca %d | xp %d | ouro %d\n", j->nome, j->jogadas, j->disputasVencidas, j->forca, j->xp, j->ouro);
+}
 
 /**
  * @brief Converte o dado genérico para jogador e libera a memória alocada para ele
  * @param dado Ponteiro genérico para o jogador
  */
-void desalocaJogador(void *dado);
+void desalocaJogador(void *dado){
+    //Type cast.
+    Jogador *j = (Jogador*)dado;
+
+    //Desaloca.
+    free(j);
+}

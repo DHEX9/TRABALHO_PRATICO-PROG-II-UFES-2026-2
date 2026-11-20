@@ -1,0 +1,6 @@
+/usr/bin/x86_64-linux-gnu-ld.bfd: Resultados/Daniel_Rodrigues/acao_monstro/main.o: in function `leEntradaMapa':
+main.c:(.text+0x1069): undefined reference to `leMonstro'
+/usr/bin/x86_64-linux-gnu-ld.bfd: main.c:(.text+0x107f): undefined reference to `desalocaMonstro'
+/usr/bin/x86_64-linux-gnu-ld.bfd: main.c:(.text+0x1089): undefined reference to `imprimeMonstro'
+/usr/bin/x86_64-linux-gnu-ld.bfd: main.c:(.text+0x1093): undefined reference to `executaMonstro'
+collect2: error: ld returned 1 exit status
