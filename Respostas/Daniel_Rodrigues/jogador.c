@@ -42,8 +42,8 @@ Jogador *leJogador(){
     int forca;
 
     //Leitura nome, cor e força.
-    scanf(" %50[^\n]\n", nome);
-    scanf(" %15[^\n]\n", cor);
+    scanf(" %50[^\n]", nome);
+    scanf(" %15[^\n]", cor);
     scanf("%d", &forca);
 
     //retorna o jogador criado.
@@ -115,13 +115,13 @@ int comparaOrdJogador(const void *d1, const void *d2){
     if((*j1)->casa> (*j2)->casa) return -1;
     if((*j2)->casa > (*j1)->casa) return 1;
 
-    if((*j1)->forca > (*j2)->forca) return 1;
-    if((*j2)->forca > (*j1)->forca) return -1;
+    if((*j1)->forca > (*j2)->forca) return -1;
+    if((*j2)->forca > (*j1)->forca) return 1;
 
-    if((*j1)->xp > (*j2)->xp) return 1;
-    if((*j2)->xp > (*j1)->xp) return -1;
+    if((*j1)->xp > (*j2)->xp) return -1;
+    if((*j2)->xp > (*j1)->xp) return 1;
 
-    return strcmp((*j1)->nome, (*j2)->nome);;
+    return strcmp((*j1)->nome, (*j2)->nome);
 }
 
 /**
@@ -290,7 +290,7 @@ void printEstadoJogador(void *dado){
     //Type cast.
     Jogador *j = (Jogador*)dado;
     
-    printf("- %s: casa %d | forca %d | xp %d | ouro ouro\n", j->nome, j->casa, j->forca, j->xp, j->ouro);
+    printf("- %s: casa %d | forca %d | xp %d | ouro %d\n", j->nome, j->casa, j->forca, j->xp, j->ouro);
 }
 
 /**
@@ -315,7 +315,7 @@ void printRelatorioJogador(void *dado){
     Jogador *j = (Jogador*)dado;
 
     //Printa.
-    printf("- %s: | jogadas %d | disputas vencidas %d | forca %d | xp %d | ouro %d\n", j->nome, j->jogadas, j->disputasVencidas, j->forca, j->xp, j->ouro);
+    printf("- %s: jogadas %d | disputas vencidas %d | forca %d | xp %d | ouro %d\n", j->nome, j->jogadas, j->disputasVencidas, j->forca, j->xp, j->ouro);
 }
 
 /**

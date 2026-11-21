@@ -1,4 +1,0 @@
-jogador.c: In function ‘printEstadoJogador’:
-jogador.c:292:12: warning: too many arguments for format [-Wformat-extra-args]
-  292 |     printf("- %s: casa %d | forca %d | xp %d | ouro ouro\n", j->nome, j->casa, j->forca, j->xp, j->ouro);
-      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

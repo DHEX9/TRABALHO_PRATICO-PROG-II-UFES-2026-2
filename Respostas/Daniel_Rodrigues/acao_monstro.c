@@ -16,8 +16,16 @@ struct Monstro{
  * @return Ponteiro para o monstro criado
  */
 Monstro *criaMonstro(char *nome, int forca, int xp){
+
+    //AAloca dinamicamente um monstro.
     Monstro *m = malloc(sizeof(Monstro));
     if(!m) exit(1);
+
+    strcmp(m->nome, nome);
+    m->forca = forca;
+    m->xp = xp;
+
+    return m;
 }
 
 /**
@@ -25,7 +33,19 @@ Monstro *criaMonstro(char *nome, int forca, int xp){
  * já deve ter sido lida) e cria o monstro com criaMonstro.
  * @return Ponteiro para o monstro criado
  */
-Monstro *leMonstro();
+Monstro *leMonstro(){
+
+    //Variáveis temporárias.
+    char nome[MAX_TAM_NOME_MONSTRO];
+    int forca, xp;
+
+    //Leitura de dados.
+    scanf(" %s %d %d", nome, &forca, &xp);
+
+    //Retorna o monstro alocado.
+    return criaMonstro(nome, forca, xp);
+
+}
 
 /**
  * @brief Converte o dado genérico para monstro e realiza o confronto. Se a força do jogador for maior
@@ -36,7 +56,10 @@ Monstro *leMonstro();
  * @param j Jogador que parou na célula
  * @return 0 se o jogador vencer ou RECUO_CELULA se perder
  */
-int executaMonstro(void *dado, Jogador *j);
+int executaMonstro(void *dado, Jogador *j){
+
+    //Type cast
+}
 
 /**
  * @brief Converte o dado genérico para monstro e imprime, sem quebra de linha:

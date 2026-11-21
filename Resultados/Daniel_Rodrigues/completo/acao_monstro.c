@@ -1,6 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "acao_monstro.h"
 
-typedef struct Monstro Monstro;
+struct Monstro{
+    char nome[MAX_TAM_NOME_MONSTRO];
+    int forca, xp;
+};
 
 /**
  * @brief Aloca dinamicamente uma ação do tipo MONSTRO e guarda nela o nome (copiado), a força e a XP
@@ -9,7 +15,12 @@ typedef struct Monstro Monstro;
  * @param xp XP ganha por quem derrotar o monstro
  * @return Ponteiro para o monstro criado
  */
-Monstro *criaMonstro(char *nome, int forca, int xp);
+Monstro *criaMonstro(char *nome, int forca, int xp){
+    Monstro *m = malloc(sizeof(Monstro));
+    if(!m) exit(1);
+
+    
+}
 
 /**
  * @brief Lê da entrada padrão, na mesma linha, o nome, a força e a XP do monstro (a palavra MONSTRO
