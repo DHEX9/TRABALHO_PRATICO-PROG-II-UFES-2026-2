@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "celula.h"
 #include "acao_monstro.h"
 
 struct Monstro{
@@ -16,10 +17,16 @@ struct Monstro{
  * @return Ponteiro para o monstro criado
  */
 Monstro *criaMonstro(char *nome, int forca, int xp){
+
+    //AAloca dinamicamente um monstro.
     Monstro *m = malloc(sizeof(Monstro));
     if(!m) exit(1);
 
-    
+    strcpy(m->nome, nome);
+    m->forca = forca;
+    m->xp = xp;
+
+    return m;
 }
 
 /**
@@ -27,7 +34,19 @@ Monstro *criaMonstro(char *nome, int forca, int xp){
  * já deve ter sido lida) e cria o monstro com criaMonstro.
  * @return Ponteiro para o monstro criado
  */
-Monstro *leMonstro();
+Monstro *leMonstro(){
+
+    //Variáveis temporárias.
+    char nome[MAX_TAM_NOME_MONSTRO];
+    int forca, xp;
+
+    //Leitura de dados.
+    scanf(" %20s %d %d", nome, &forca, &xp);
+
+    //Retorna o monstro alocado.
+    return criaMonstro(nome, forca, xp);
+
+}
 
 /**
  * @brief Converte o dado genérico para monstro e realiza o confronto. Se a força do jogador for maior
@@ -38,17 +57,44 @@ Monstro *leMonstro();
  * @param j Jogador que parou na célula
  * @return 0 se o jogador vencer ou RECUO_CELULA se perder
  */
-int executaMonstro(void *dado, Jogador *j);
+int executaMonstro(void *dado, Jogador *j){
+
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    //Confere vitória do jogador e atribuí suas recompensas.
+    if(obtemForcaJogador(j) >= m->forca){
+        adicionaXPJogador(j, m->xp);
+        incrementaMonstrosDerrotadosJogador(j);
+        return 0;
+    }
+
+    //Recua caso perdido.
+    return RECUO_CELULA;
+}
 
 /**
  * @brief Converte o dado genérico para monstro e imprime, sem quebra de linha:
  * "MONSTRO <nome> (F:<forca> XP:<xp>)". Ex: "MONSTRO GOBLIN (F:3 XP:10)"
  * @param dado Ponteiro genérico para o monstro
  */
-void imprimeMonstro(void *dado);
+void imprimeMonstro(void *dado){
+
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    printf("MONSTRO %s (F:%d XP:%d)", m->nome, m->forca, m->xp);
+}
 
 /**
  * @brief Converte o dado genérico para monstro e libera a memória alocada para ele
  * @param dado Ponteiro genérico para o monstro
  */
-void desalocaMonstro(void *dado);
+void desalocaMonstro(void *dado){
+
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    //Desaloca Monstro.
+    free(m);
+}

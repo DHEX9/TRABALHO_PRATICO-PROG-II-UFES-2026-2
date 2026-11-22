@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "celula.h"
 #include "acao_monstro.h"
 
 struct Monstro{
@@ -21,7 +22,7 @@ Monstro *criaMonstro(char *nome, int forca, int xp){
     Monstro *m = malloc(sizeof(Monstro));
     if(!m) exit(1);
 
-    strcmp(m->nome, nome);
+    strcpy(m->nome, nome);
     m->forca = forca;
     m->xp = xp;
 
@@ -40,7 +41,7 @@ Monstro *leMonstro(){
     int forca, xp;
 
     //Leitura de dados.
-    scanf(" %s %d %d", nome, &forca, &xp);
+    scanf(" %20s %d %d", nome, &forca, &xp);
 
     //Retorna o monstro alocado.
     return criaMonstro(nome, forca, xp);
@@ -58,7 +59,18 @@ Monstro *leMonstro(){
  */
 int executaMonstro(void *dado, Jogador *j){
 
-    //Type cast
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    //Confere vitória do jogador e atribuí suas recompensas.
+    if(obtemForcaJogador(j) >= m->forca){
+        adicionaXPJogador(j, m->xp);
+        incrementaMonstrosDerrotadosJogador(j);
+        return 0;
+    }
+
+    //Recua caso perdido.
+    return RECUO_CELULA;
 }
 
 /**
@@ -66,10 +78,23 @@ int executaMonstro(void *dado, Jogador *j){
  * "MONSTRO <nome> (F:<forca> XP:<xp>)". Ex: "MONSTRO GOBLIN (F:3 XP:10)"
  * @param dado Ponteiro genérico para o monstro
  */
-void imprimeMonstro(void *dado);
+void imprimeMonstro(void *dado){
+
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    printf("MONSTRO %s (F:%d XP:%d)", m->nome, m->forca, m->xp);
+}
 
 /**
  * @brief Converte o dado genérico para monstro e libera a memória alocada para ele
  * @param dado Ponteiro genérico para o monstro
  */
-void desalocaMonstro(void *dado);
+void desalocaMonstro(void *dado){
+
+    //Type cast.
+    Monstro *m = (Monstro*) dado;
+
+    //Desaloca Monstro.
+    free(m);
+}

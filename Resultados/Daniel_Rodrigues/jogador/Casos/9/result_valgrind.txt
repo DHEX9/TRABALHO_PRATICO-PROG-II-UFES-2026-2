@@ -1,15 +1,15 @@
-==2442== Memcheck, a memory error detector
-==2442== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
-==2442== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
-==2442== Command: Resultados/Daniel_Rodrigues/jogador/prog Resultados/Daniel_Rodrigues/jogador/Casos/9
-==2442== Parent PID: 2441
-==2442== 
-==2442== 
-==2442== HEAP SUMMARY:
-==2442==     in use at exit: 0 bytes in 0 blocks
-==2442==   total heap usage: 205 allocs, 205 frees, 15,392 bytes allocated
-==2442== 
-==2442== All heap blocks were freed -- no leaks are possible
-==2442== 
-==2442== For lists of detected and suppressed errors, rerun with: -s
-==2442== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==65691== Memcheck, a memory error detector
+==65691== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==65691== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==65691== Command: Resultados/Daniel_Rodrigues/jogador/prog Resultados/Daniel_Rodrigues/jogador/Casos/9
+==65691== Parent PID: 65690
+==65691== 
+==65691== 
+==65691== HEAP SUMMARY:
+==65691==     in use at exit: 0 bytes in 0 blocks
+==65691==   total heap usage: 205 allocs, 205 frees, 15,392 bytes allocated
+==65691== 
+==65691== All heap blocks were freed -- no leaks are possible
+==65691== 
+==65691== For lists of detected and suppressed errors, rerun with: -s
+==65691== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
