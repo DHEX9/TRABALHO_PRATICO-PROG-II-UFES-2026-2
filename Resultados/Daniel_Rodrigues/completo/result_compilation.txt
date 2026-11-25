@@ -1,0 +1,4 @@
+item.c:4:10: fatal error: item.h: No such file or directory
+    4 | #include "item.h"
+      |          ^~~~~~~~
+compilation terminated.
